@@ -25,7 +25,7 @@ namespace StockGEMS
             // Apply strategy and get list to buy
             var stockQuantitiesToBuy = _strategy.GenerateAllocation(DollarAmount, quotes);
             // Buy buy buy!
-            _purchaser.BuyStocks(quotes, stockQuantitiesToBuy); 
+            bool success = _purchaser.BuyStocks(quotes, stockQuantitiesToBuy); 
             // Hodl stonks
         }
     }

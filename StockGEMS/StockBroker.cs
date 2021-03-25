@@ -14,7 +14,7 @@ namespace StockGEMS
             this._password = Environment.GetEnvironmentVariable("StockBrokerPassword");
         }
 
-        internal void BuyStocks(IDictionary<string, double> quotes, IDictionary<string, int> stockQuantitiesToBuy)
+        internal bool BuyStocks(IDictionary<string, double> quotes, IDictionary<string, int> stockQuantitiesToBuy)
         {
             //var purchaseContext = ConnectToBroker(_userName, _password).CreatePurchaseContext()
             var total = 0.0; 
@@ -24,8 +24,10 @@ namespace StockGEMS
                 //purchaseContext.Add(stock, stockQuantitiesToBuy[stock])
                 total += stockQuantitiesToBuy[stock] * quotes[stock];
             }
-            //purchaseContext.Execute(); 
+            //bool executed = purchaseContext.Execute(); 
             Console.WriteLine($"Order executed. Total cost: ${total:0.00}");
+            // return executed 
+            return true; 
         }
     }
 }
