@@ -2,7 +2,7 @@
 
 namespace StockGEMS
 {
-    internal class StockGEMS
+    public class StockGEMS
     {
         private QuoteService _quoteService;
         private Strategy _strategy;
@@ -17,7 +17,7 @@ namespace StockGEMS
             this._purchaser = new StockBroker(); 
         }
 
-        internal void Run()
+        public void Run()
         {
             string[] tickers = { "GME", "BSY", "AAPL", "TSLA" };
             // Get prices

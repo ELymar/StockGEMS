@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace StockGEMS
 {
-    internal class Strategy
+    public class Strategy
     {
         public Strategy()
         {
 
         }
 
-        internal IDictionary<string, int> GenerateAllocation(double dollarAmount, IDictionary<string, double> quotes)
+        public IDictionary<string, int> GenerateAllocation(double dollarAmount, IDictionary<string, double> quotes)
         {
             Console.WriteLine("Generating 80/20 strategy of GME and BSY"); 
             // 80/20 strategy of GME and BSY

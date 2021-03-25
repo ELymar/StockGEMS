@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StockGEMS
 {
-    internal class StockBroker
+    public class StockBroker
     {
         private readonly string _userName;
         private readonly string _password;
@@ -14,7 +14,7 @@ namespace StockGEMS
             this._password = Environment.GetEnvironmentVariable("StockBrokerPassword");
         }
 
-        internal bool BuyStocks(IDictionary<string, double> quotes, IDictionary<string, int> stockQuantitiesToBuy)
+        public bool BuyStocks(IDictionary<string, double> quotes, IDictionary<string, int> stockQuantitiesToBuy)
         {
             //var purchaseContext = ConnectToBroker(_userName, _password).CreatePurchaseContext()
             var total = 0.0; 
