@@ -15,9 +15,9 @@ namespace StockGEMS
             _singletons = new Dictionary<Type, object>(); 
         }
 
-        public void RegisterSingleton<IType>(Type concrete)
+        public void RegisterSingleton<IType, ConcType>()
         {
-            _mappings.Add(typeof(IType), concrete); 
+            _mappings.Add(typeof(IType), typeof(ConcType)); 
         }
 
         public IType GetObject<IType>()

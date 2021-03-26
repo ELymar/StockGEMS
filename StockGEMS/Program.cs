@@ -9,11 +9,11 @@ namespace StockGEMS
             Console.WriteLine("Hello World!");
             // Build 
             Container container = new Container();
-            container.RegisterSingleton<ILogger>(typeof(ConsoleLogger)); 
-            container.RegisterSingleton<IStrategy>(typeof(Strategy));
-            container.RegisterSingleton<IQuoteService>(typeof(QuoteService)); 
-            container.RegisterSingleton<IStockGEMS>(typeof(StockGEMS)); 
-            container.RegisterSingleton<IStockBroker>(typeof(StockBroker));
+            container.RegisterSingleton<ILogger, ConsoleLogger>(); 
+            container.RegisterSingleton<IStrategy, Strategy>();
+            container.RegisterSingleton<IQuoteService, QuoteService>(); 
+            container.RegisterSingleton<IStockGEMS, StockGEMS>(); 
+            container.RegisterSingleton<IStockBroker, StockBroker>();
 
             IStockGEMS stockGems = container.GetObject<IStockGEMS>();
             stockGems.Run(); 
