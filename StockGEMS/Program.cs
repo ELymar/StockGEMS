@@ -8,11 +8,15 @@ namespace StockGEMS
         {
             Console.WriteLine("Hello World!");
             // Build 
-            IQuoteService quoteService = new QuoteService();
+            IQuoteService quoteService = new QuoteService(
+                new ConsoleLogger()
+            );
             IStrategy strategy = new Strategy(
                 new ConsoleLogger()
-                );
-            IStockBroker purchaser = new StockBroker();
+            );
+            IStockBroker purchaser = new StockBroker(
+                new ConsoleLogger()
+            );
             IStockGEMS stockTrader = new StockGEMS(quoteService, strategy, purchaser);
             stockTrader.Run(); 
         }

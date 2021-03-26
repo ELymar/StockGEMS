@@ -7,11 +7,13 @@ namespace StockGEMS
     {
         private readonly string _userName;
         private readonly string _password;
+        private readonly ILogger _logger;
 
-        public StockBroker()
+        public StockBroker(ILogger logger)
         {
             this._userName = Environment.GetEnvironmentVariable("StockBrokerUserName");
             this._password = Environment.GetEnvironmentVariable("StockBrokerPassword");
+            this._logger = logger;
         }
 
         public bool BuyStocks(IDictionary<string, double> quotes, IDictionary<string, int> stockQuantitiesToBuy)
@@ -20,12 +22,12 @@ namespace StockGEMS
             var total = 0.0;
             foreach (var stock in stockQuantitiesToBuy.Keys)
             {
-                Console.WriteLine($"Ordering {stockQuantitiesToBuy[stock]} shares of {stock} at ${quotes[stock]:0.00} per share");
+                _logger.Log($"Ordering {stockQuantitiesToBuy[stock]} shares of {stock} at ${quotes[stock]:0.00} per share");
                 //purchaseContext.Add(stock, stockQuantitiesToBuy[stock])
                 total += stockQuantitiesToBuy[stock] * quotes[stock];
             }
             //bool executed = purchaseContext.Execute(); 
-            Console.WriteLine($"Order executed. Total cost: ${total:0.00}");
+            _logger.Log($"Order executed. Total cost: ${total:0.00}");
             // return executed 
             return true;
         }
