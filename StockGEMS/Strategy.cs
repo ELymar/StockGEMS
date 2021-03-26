@@ -5,14 +5,16 @@ namespace StockGEMS
 {
     public class Strategy : IStrategy
     {
-        public Strategy()
-        {
+        private readonly ILogger _logger;
 
+        public Strategy(ILogger logger)
+        {
+            this._logger = logger;
         }
 
         public IDictionary<string, int> GenerateAllocation(double dollarAmount, IDictionary<string, double> quotes)
         {
-            Console.WriteLine("Generating 80/20 strategy of GME and BSY");
+            _logger.Log("Generating 80/20 strategy of GME and BSY");
             // 80/20 strategy of GME and BSY
             IDictionary<string, int> stocksToBuy = new Dictionary<string, int>();
             stocksToBuy.Add("GME", (int)(Math.Floor(dollarAmount * 0.8 / quotes["GME"])));
