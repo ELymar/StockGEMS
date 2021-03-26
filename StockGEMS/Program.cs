@@ -9,13 +9,13 @@ namespace StockGEMS
             Console.WriteLine("Hello World!");
             // Build 
             Container container = new Container();
-            container.RegisterSingleton(typeof(ILogger), typeof(ConsoleLogger)); 
-            container.RegisterSingleton(typeof(IStrategy), typeof(Strategy));
-            container.RegisterSingleton(typeof(IQuoteService), typeof(QuoteService)); 
-            container.RegisterSingleton(typeof(IStockGEMS), typeof(StockGEMS)); 
-            container.RegisterSingleton(typeof(IStockBroker), typeof(StockBroker));
+            container.RegisterSingleton<ILogger>(typeof(ConsoleLogger)); 
+            container.RegisterSingleton<IStrategy>(typeof(Strategy));
+            container.RegisterSingleton<IQuoteService>(typeof(QuoteService)); 
+            container.RegisterSingleton<IStockGEMS>(typeof(StockGEMS)); 
+            container.RegisterSingleton<IStockBroker>(typeof(StockBroker));
 
-            IStockGEMS stockGems = (IStockGEMS)container.GetObject(typeof(IStockGEMS));
+            IStockGEMS stockGems = container.GetObject<IStockGEMS>();
             stockGems.Run(); 
 
             /*
