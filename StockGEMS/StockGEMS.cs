@@ -4,17 +4,17 @@ namespace StockGEMS
 {
     public class StockGEMS : IStockGEMS
     {
-        private IQuoteService _quoteService;
-        private IStrategy _strategy;
-        private IStockBroker _purchaser;
+        private readonly IQuoteService _quoteService;
+        private readonly IStrategy _strategy;
+        private readonly IStockBroker _purchaser;
 
         private int DollarAmount { get; set; } = 1000000;
 
-        public StockGEMS()
+        public StockGEMS(IQuoteService quoteService, IStrategy strategy, IStockBroker stockBroker)
         {
-            this._quoteService = new QuoteService();
-            this._strategy = new Strategy();
-            this._purchaser = new StockBroker();
+            this._quoteService = quoteService;
+            this._strategy = strategy;
+            this._purchaser = stockBroker;
         }
 
         public void Run()
