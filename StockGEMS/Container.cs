@@ -6,18 +6,25 @@ namespace StockGEMS
 {
     public class Container
     {
-        private IDictionary<Type, Type> _mappings; 
+        private IDictionary<Type, Type> _singletonMap; 
+        private IDictionary<Type, Type> _transientMap;
         private IDictionary<Type, object> _singletons;
         
         public Container()
         {
-            _mappings = new Dictionary<Type, Type>();
+            _singletonMap = new Dictionary<Type, Type>();
+            _transientMap = new Dictionary<Type, Type>();
             _singletons = new Dictionary<Type, object>(); 
         }
 
         public void RegisterSingleton<IType, ConcType>()
         {
-            _mappings.Add(typeof(IType), typeof(ConcType)); 
+            _singletonMap.Add(typeof(IType), typeof(ConcType)); 
+        }
+
+        public void RegisterTransient<IType, ConcType>()
+        {
+            _transientMap.Add(typeof(IType), typeof(ConcType));
         }
 
         public IType GetObject<IType>()
@@ -26,20 +33,28 @@ namespace StockGEMS
             if (_singletons.ContainsKey(typeof(IType))) 
                 return (IType)_singletons[typeof(IType)];
 
-            if (!_mappings.ContainsKey(typeof(IType)))
+            Type concreteType;
+            bool isSingleton = _singletonMap.ContainsKey(typeof(IType));
+            if (isSingleton)
+                concreteType = _singletonMap[typeof(IType)];
+            else if (_transientMap.ContainsKey(typeof(IType)))
+                concreteType = _transientMap[typeof(IType)];
+            else
                 throw new ApplicationException($"Type {typeof(IType)} does not have a registered concrete class");
 
-            var concreteType = _mappings[typeof(IType)]; 
             var constructors = concreteType.GetConstructors();
             if (constructors.Length != 1) throw new ApplicationException($"Only one constructor supported. Got {constructors.Length}");
             var constructor = constructors[0];
             var parameters = constructor.GetParameters();
 
+            object objectToReturn; 
             // Base Case 2 (Constructor has no parameters, trivial construction)
             if (parameters.Length == 0)
             {
-                _singletons.Add(typeof(IType), constructor.Invoke(null));
-                return (IType)_singletons[typeof(IType)]; 
+                objectToReturn = constructor.Invoke(null);
+                if (isSingleton) // Lazy initialize
+                    _singletons.Add(typeof(IType), objectToReturn);
+                return (IType)objectToReturn; 
             }
 
             // Recursive Case (For each parameter of the constructor GetObject recursively)
@@ -49,8 +64,11 @@ namespace StockGEMS
                 var methodInfo = typeof(Container).GetMethod("GetObject").MakeGenericMethod(parameters[i].ParameterType); 
                 arguments[i] = methodInfo.Invoke(this, null);  
             }
-            _singletons.Add(typeof(IType), constructor.Invoke(arguments));
-            return (IType)_singletons[typeof(IType)];
+
+            objectToReturn = constructor.Invoke(arguments); 
+            if(isSingleton)
+                _singletons.Add(typeof(IType), objectToReturn);
+            return (IType)objectToReturn;
         }
     }
 }
