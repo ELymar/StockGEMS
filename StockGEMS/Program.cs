@@ -7,7 +7,7 @@ namespace StockGEMS
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            StockGEMS stockTrader = new StockGEMS();
+            IStockGEMS stockTrader = new StockGEMS();
             stockTrader.Run(); 
         }
     }

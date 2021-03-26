@@ -2,19 +2,19 @@
 
 namespace StockGEMS
 {
-    public class StockGEMS
+    public class StockGEMS : IStockGEMS
     {
-        private QuoteService _quoteService;
-        private Strategy _strategy;
-        private StockBroker _purchaser;
+        private IQuoteService _quoteService;
+        private IStrategy _strategy;
+        private IStockBroker _purchaser;
 
-        private int DollarAmount { get; set; } = 1000000; 
+        private int DollarAmount { get; set; } = 1000000;
 
         public StockGEMS()
         {
             this._quoteService = new QuoteService();
             this._strategy = new Strategy();
-            this._purchaser = new StockBroker(); 
+            this._purchaser = new StockBroker();
         }
 
         public void Run()
@@ -25,7 +25,7 @@ namespace StockGEMS
             // Apply strategy and get list to buy
             var stockQuantitiesToBuy = _strategy.GenerateAllocation(DollarAmount, quotes);
             // Buy buy buy!
-            bool success = _purchaser.BuyStocks(quotes, stockQuantitiesToBuy); 
+            bool success = _purchaser.BuyStocks(quotes, stockQuantitiesToBuy);
             // Hodl stonks
         }
     }
