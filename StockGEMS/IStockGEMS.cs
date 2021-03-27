@@ -2,6 +2,6 @@
 {
     public interface IStockGEMS
     {
-        void Run();
+        bool Run(int dollarAmount);
     }
 }

@@ -10,8 +10,8 @@ namespace StockGEMS
             // Build 
             Container container = new Container();
 
-            container.RegisterSingleton<ILogger, ConsoleLogger>(); 
-            //container.RegisterTransient<ILogger, ConsoleLogger>();
+            //container.RegisterSingleton<ILogger, ConsoleLogger>(); 
+            container.RegisterTransient<ILogger, ConsoleLogger>();
 
             container.RegisterSingleton<IStrategy, Strategy>();
             container.RegisterSingleton<IQuoteService, QuoteService>(); 
@@ -19,7 +19,7 @@ namespace StockGEMS
             container.RegisterSingleton<IStockBroker, StockBroker>();
 
             IStockGEMS stockGems = container.GetObject<IStockGEMS>();
-            stockGems.Run(); 
+            bool success = stockGems.Run(1000000); 
 
             /*
             IQuoteService quoteService = new QuoteService(
