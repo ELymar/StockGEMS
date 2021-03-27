@@ -17,12 +17,12 @@ namespace StockGEMS
             _singletons = new Dictionary<Type, object>(); 
         }
 
-        public void RegisterSingleton<IType, ConcType>()
+        public void RegisterSingleton<IType, ConcType>() where ConcType:IType
         {
             _singletonMap.Add(typeof(IType), typeof(ConcType)); 
         }
 
-        public void RegisterTransient<IType, ConcType>()
+        public void RegisterTransient<IType, ConcType>() where ConcType:IType 
         {
             _transientMap.Add(typeof(IType), typeof(ConcType));
         }
